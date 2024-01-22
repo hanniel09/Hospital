@@ -10,16 +10,16 @@ public class Doctor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column
     private Long DVC;
 
-    @Column(nullable = false)
+    @Column
     private String name;
 
-    @Column(nullable = false)
+    @Column
     private String specialty;
 
-    @Column(nullable = false)
+    @Column
     private String room;
 
     public Doctor() {

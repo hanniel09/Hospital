@@ -3,6 +3,8 @@ package org.hanniel.hospital.domain;
 import jakarta.persistence.*;
 import org.hanniel.hospital.dtos.PatientDTO;
 
+import java.util.List;
+
 @Entity
 @Table
 public class Patient {
@@ -25,11 +27,11 @@ public class Patient {
 
     private String medicine;
 
-    @ManyToOne
+    @ManyToMany
     @JoinTable(name = "ResponsibleDoctor",
-    joinColumns = @JoinColumn(name = "patient_id"),
-    inverseJoinColumns = @JoinColumn(name = "doctor_id"))
-    private Doctor doctor;
+            joinColumns = @JoinColumn(name = "patient_id"),
+            inverseJoinColumns = @JoinColumn(name = "doctor_id"))
+    private List<Doctor> doctorList;
 
     private String description;
 
@@ -42,17 +44,17 @@ public class Patient {
         this.symptoms = data.symptoms();
         this.queuePriority = data.queuePriority();
         this.medicine = data.medicine();
-        this.doctor = data.doctor();
+        this.doctorList = data.doctorList();
         this.description = data.description();
     }
 
-    public Patient(Long attendanceSheet, String name, String symptoms, String queuePriority, String medicine, Doctor doctor, String description) {
+    public Patient(Long attendanceSheet, String name, String symptoms, String queuePriority, String medicine, List<Doctor> doctor, String description) {
         this.attendanceSheet = attendanceSheet;
         this.name = name;
         this.symptoms = symptoms;
         this.queuePriority = queuePriority;
         this.medicine = medicine;
-        this.doctor = doctor;
+        this.doctorList = doctor;
         this.description = description;
     }
 
@@ -104,12 +106,12 @@ public class Patient {
         this.medicine = medicine;
     }
 
-    public Doctor getDoctor() {
-        return doctor;
+    public List<Doctor> getDoctorList() {
+        return doctorList;
     }
 
-    public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
+    public void setDoctorList(List<Doctor> doctor) {
+        this.doctorList = doctor;
     }
 
     public String getDescription() {

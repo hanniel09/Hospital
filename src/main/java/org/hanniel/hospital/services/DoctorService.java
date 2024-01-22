@@ -1,5 +1,6 @@
 package org.hanniel.hospital.services;
 
+import jakarta.transaction.Transactional;
 import org.hanniel.hospital.domain.Doctor;
 import org.hanniel.hospital.dtos.DoctorDTO;
 import org.hanniel.hospital.exceptions.BadRequestException;
@@ -15,28 +16,30 @@ public class DoctorService {
     @Autowired
     DoctorRepository doctorRepository;
 
-    public List<Doctor> findAllDoctors(){
+    public List<Doctor> findAllDoctors() {
         return doctorRepository.findAll();
     }
 
     public Doctor findDoctorById(Long id) {
-        return doctorRepository.findById(id).
-                orElseThrow(() -> new BadRequestException("Doctor", id));
+        return doctorRepository.findById(id).orElseThrow(() ->
+                new BadRequestException("Doctor", id)
+        );
     }
 
-    public Doctor createDoctor(DoctorDTO data){
+    @Transactional
+    public Doctor createDoctor(DoctorDTO data) {
         Doctor doctor = new Doctor(data);
         return doctorRepository.save(doctor);
     }
 
-    public Doctor updateDoctor(DoctorDTO data, Long id){
+    public Doctor updateDoctor(DoctorDTO data, Long id) {
         Doctor oldDoctor = findDoctorById(id);
         Doctor newDoctor = new Doctor(data);
         newDoctor.setId(oldDoctor.getId());
         return doctorRepository.save(newDoctor);
     }
 
-    public void deleteDoctor(Long id){
+    public void deleteDoctor(Long id) {
         doctorRepository.deleteById(id);
     }
 
