@@ -1,4 +1,15 @@
 package org.hanniel.hospital.dtos;
 
-public record DoctorDTO(Long DVC, String name, String specialty, String room) {
+import jakarta.validation.constraints.NotNull;
+
+public record DoctorDTO(
+        @NotNull
+        Long DVC,
+        @NotNull
+        String name,
+        @NotNull
+        String specialty,
+        @NotNull
+        String room) {
+
 }
