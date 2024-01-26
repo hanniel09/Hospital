@@ -25,11 +25,6 @@ public class Patient {
 
     private String medicine;
 
-
-    /*
-    * Bug: When I create a List of doctors, the api create a new Doctor and no find the doctor with his id
-    */
-
     @ManyToOne
     @JoinTable(name = "ResponsibleDoctor",
             joinColumns = @JoinColumn(name = "patient_id"),
