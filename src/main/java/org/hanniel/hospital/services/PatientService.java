@@ -33,6 +33,8 @@ public class PatientService {
     @Transactional
     public Patient createPatient(PatientDTO data) {
         Patient patient = new Patient(data);
+        Doctor doctor = doctorService.findDoctorById(data.doctor().getId());
+        patient.setDoctor(doctor);
         return patientRepository.save(patient);
     }
 

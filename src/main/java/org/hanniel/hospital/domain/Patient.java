@@ -3,8 +3,6 @@ package org.hanniel.hospital.domain;
 import jakarta.persistence.*;
 import org.hanniel.hospital.dtos.PatientDTO;
 
-import java.util.List;
-
 @Entity
 @Table
 public class Patient {
@@ -32,11 +30,11 @@ public class Patient {
     * Bug: When I create a List of doctors, the api create a new Doctor and no find the doctor with his id
     */
 
-    @ManyToMany
+    @ManyToOne
     @JoinTable(name = "ResponsibleDoctor",
             joinColumns = @JoinColumn(name = "patient_id"),
             inverseJoinColumns = @JoinColumn(name = "doctor_id"))
-    private List<Doctor> doctorList;
+    private Doctor doctor;
 
     private String description;
 
@@ -49,17 +47,17 @@ public class Patient {
         this.symptoms = data.symptoms();
         this.queuePriority = data.queuePriority();
         this.medicine = data.medicine();
-        this.doctorList = data.doctorList();
+        this.doctor = data.doctor();
         this.description = data.description();
     }
 
-    public Patient(Long attendanceSheet, String name, String symptoms, String queuePriority, String medicine, List<Doctor> doctor, String description) {
+    public Patient(Long attendanceSheet, String name, String symptoms, String queuePriority, String medicine, Doctor doctor, String description) {
         this.attendanceSheet = attendanceSheet;
         this.name = name;
         this.symptoms = symptoms;
         this.queuePriority = queuePriority;
         this.medicine = medicine;
-        this.doctorList = doctor;
+        this.doctor = doctor;
         this.description = description;
     }
 
@@ -111,12 +109,12 @@ public class Patient {
         this.medicine = medicine;
     }
 
-    public List<Doctor> getDoctorList() {
-        return doctorList;
+    public Doctor getDoctor() {
+        return doctor;
     }
 
-    public void setDoctorList(List<Doctor> doctor) {
-        this.doctorList = doctor;
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
     }
 
     public String getDescription() {
