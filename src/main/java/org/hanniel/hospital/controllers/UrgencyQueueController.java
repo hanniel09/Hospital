@@ -1,6 +1,8 @@
 package org.hanniel.hospital.controllers;
 
+import org.hanniel.hospital.domain.Patient;
 import org.hanniel.hospital.domain.UrgencyQueue;
+import org.hanniel.hospital.dtos.RequestPatient;
 import org.hanniel.hospital.dtos.UrgencyQueueDTO;
 import org.hanniel.hospital.services.UrgencyQueueService;
 import org.springframework.beans.factory.annotation.Autowired;

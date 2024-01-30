@@ -2,12 +2,15 @@ package org.hanniel.hospital.services;
 
 import org.hanniel.hospital.domain.Patient;
 import org.hanniel.hospital.domain.UrgencyQueue;
+import org.hanniel.hospital.dtos.RequestPatient;
 import org.hanniel.hospital.dtos.UrgencyQueueDTO;
 import org.hanniel.hospital.exceptions.BadRequestException;
 import org.hanniel.hospital.repositories.UrgencyQueueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -16,6 +19,9 @@ public class UrgencyQueueService {
 
     @Autowired
     UrgencyQueueRepository urgencyQueueRepository;
+
+    @Autowired
+    PatientService patientService;
 
     public List<UrgencyQueue> getAllUrgencyQueue() {
         return urgencyQueueRepository.findAll();
@@ -27,10 +33,7 @@ public class UrgencyQueueService {
     }
 
     public UrgencyQueue createUrgencyQueue(UrgencyQueueDTO data) {
-        String queueName = data.name();
-        Set<Patient> patients = data.patients();
-        UrgencyQueue urgencyQueue = new UrgencyQueue(queueName);
-        urgencyQueue.setPatients(patients);
+       UrgencyQueue urgencyQueue = new UrgencyQueue(data);
         return urgencyQueueRepository.save(urgencyQueue);
     }
 
