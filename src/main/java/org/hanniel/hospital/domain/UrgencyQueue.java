@@ -1,7 +1,9 @@
 package org.hanniel.hospital.domain;
 
 import jakarta.persistence.*;
+import org.hanniel.hospital.dtos.UrgencyQueueDTO;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -12,16 +14,19 @@ public class UrgencyQueue {
     private Long id;
 
     private String name;
-
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
-    private Set<Patient> patients;
+    private List<Long> patients;
 
     public UrgencyQueue() {
     }
 
-    public UrgencyQueue(String name, Set<Patient> patients) {
+    public UrgencyQueue(String name, List<Long> patients) {
         this.name = name;
         this.patients = patients;
+    }
+
+    public UrgencyQueue(UrgencyQueueDTO data) {
+        this.name = data.name();
+        this.patients = data.patients();
     }
 
     public UrgencyQueue(String name) {
@@ -44,11 +49,11 @@ public class UrgencyQueue {
         this.name = name;
     }
 
-    public Set<Patient> getPatients() {
+    public List<Long> getPatients() {
         return patients;
     }
 
-    public void setPatients(Set<Patient> patientList) {
+    public void setPatients(List<Long> patientList) {
         this.patients = patientList;
     }
 }
