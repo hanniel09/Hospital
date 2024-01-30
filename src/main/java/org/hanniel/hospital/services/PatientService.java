@@ -30,6 +30,12 @@ public class PatientService {
         );
     }
 
+    public Patient findPatientByIdTwo(Patient patient){
+        return patientRepository.findById(patient.getId()).orElseThrow(() ->
+                new BadRequestException("Patient", patient.getId())
+        );
+    }
+
     @Transactional
     public Patient createPatient(PatientDTO data) {
         Patient patient = new Patient(data);
