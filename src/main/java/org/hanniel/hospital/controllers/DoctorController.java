@@ -27,6 +27,16 @@ public class DoctorController {
         return new ResponseEntity<>(doctorService.findDoctorById(id), HttpStatus.OK);
     }
 
+    @GetMapping(path = "/byName/{name}")
+    public ResponseEntity<Doctor> findDoctorByName(@PathVariable String name){
+        return new ResponseEntity<>(doctorService.findDoctorByName(name), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/byDVC/{DVC}")
+    public ResponseEntity<Doctor> findDoctorByDVC(@PathVariable Long DVC){
+        return new ResponseEntity<>(doctorService.findDoctorByDVC(DVC), HttpStatus.OK);
+    }
+
     @PostMapping()
     public ResponseEntity<Doctor> createDoctor(@RequestBody DoctorDTO data){
         return new ResponseEntity<>(doctorService.createDoctor(data), HttpStatus.NO_CONTENT);
