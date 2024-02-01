@@ -1,5 +1,6 @@
 package org.hanniel.hospital.controllers;
 
+import org.hanniel.hospital.domain.Doctor;
 import org.hanniel.hospital.domain.Patient;
 import org.hanniel.hospital.dtos.PatientDTO;
 import org.hanniel.hospital.services.PatientService;
@@ -25,6 +26,16 @@ public class PatientController {
     @GetMapping(path = "/{id}")
     public ResponseEntity<Patient> findPatientById(@PathVariable Long id) {
         return new ResponseEntity<>(patientService.findPatientById(id), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/byName/{name}")
+    public ResponseEntity<Patient> findPatientByName(@PathVariable String name){
+        return new ResponseEntity<>(patientService.findPatientByName(name), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/byFichteNumber/{attendanceSheet}")
+    public ResponseEntity<Patient> findPatientByAttendanceSheet(@PathVariable Long attendanceSheet){
+        return new ResponseEntity<>(patientService.findPatientByAttendanceSheet(attendanceSheet), HttpStatus.OK);
     }
 
     @PostMapping()
