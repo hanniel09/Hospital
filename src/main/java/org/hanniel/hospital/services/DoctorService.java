@@ -4,11 +4,15 @@ import jakarta.transaction.Transactional;
 import org.hanniel.hospital.domain.Doctor;
 import org.hanniel.hospital.dtos.DoctorDTO;
 import org.hanniel.hospital.exceptions.BadRequestException;
+import org.hanniel.hospital.exceptions.RecordByNameNotFoundException;
+import org.hanniel.hospital.exceptions.RecordNotFoundException;
 import org.hanniel.hospital.repositories.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.print.Doc;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DoctorService {
@@ -20,10 +24,21 @@ public class DoctorService {
         return doctorRepository.findAll();
     }
 
+    public Doctor findDoctorByName(String name){
+        return doctorRepository.findDoctorByName(name).orElseThrow(() ->
+                new RecordByNameNotFoundException("Doctor", name));
+    }
+
+
     public Doctor findDoctorById(Long id) {
         return doctorRepository.findById(id).orElseThrow(() ->
                 new BadRequestException("Doctor", id)
         );
+    }
+
+    public Doctor findDoctorByDVC(Long DVC){
+        return doctorRepository.findDoctorByDVC(DVC).orElseThrow(() ->
+                new RecordNotFoundException("Doctor", DVC));
     }
 
     @Transactional
