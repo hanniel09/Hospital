@@ -5,6 +5,8 @@ import org.hanniel.hospital.domain.Doctor;
 import org.hanniel.hospital.domain.Patient;
 import org.hanniel.hospital.dtos.PatientDTO;
 import org.hanniel.hospital.exceptions.BadRequestException;
+import org.hanniel.hospital.exceptions.RecordByNameNotFoundException;
+import org.hanniel.hospital.exceptions.RecordNotFoundException;
 import org.hanniel.hospital.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,9 +32,15 @@ public class PatientService {
         );
     }
 
-    public Patient findPatientByIdTwo(Patient patient){
-        return patientRepository.findById(patient.getId()).orElseThrow(() ->
-                new BadRequestException("Patient", patient.getId())
+    public Patient findPatientByName(String name) {
+        return patientRepository.findPatientByName(name).orElseThrow(() ->
+                new RecordByNameNotFoundException("Patient", name)
+        );
+    }
+
+    public Patient findPatientByAttendanceSheet(Long attendanceSheet){
+        return patientRepository.findPatientByAttendanceSheet(attendanceSheet).orElseThrow(() ->
+                new RecordNotFoundException("Patient", attendanceSheet)
         );
     }
 
